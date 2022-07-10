@@ -1,13 +1,30 @@
-import { fork, take } from "redux-saga/effects";
+import { fork, take, call, delay, put } from "redux-saga/effects";
 import { LoginPayload, authActions } from './authSlice';
 import { PayloadAction } from '@reduxjs/toolkit';
 
+import history from "../../utils/history";
+
 function* handleLogin(payload: LoginPayload) {
-  localStorage.setItem('access_token', 'fake_token');
+  try {
+    yield delay(1000);
+    localStorage.setItem('access_token', 'fake token');
+    yield put(
+      authActions.loginSuccess({
+        id: 1,
+        name: 'ManhNT',
+      })
+    );
+  // redirect to admin page
+    history.replace('/admin')
+  } catch {
+    yield put(authActions.loginFailed(''));
+  }
 }
 
 function* handleLogout() {
+  yield delay(1000);
   localStorage.removeItem('access_token');
+  // redirect to login page
 }
 
 function* watchLoginFlow() {

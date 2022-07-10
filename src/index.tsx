@@ -5,8 +5,10 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import { BrowserRouter } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
+
+import customHistory from './utils/history';
+import CustomRouter from './utils/CustomRouter';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -14,11 +16,11 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <CustomRouter history={customHistory}>
         <CssBaseline>
           <App />
         </CssBaseline>
-      </BrowserRouter>
+      </CustomRouter>
     </Provider>
   </React.StrictMode>
 );

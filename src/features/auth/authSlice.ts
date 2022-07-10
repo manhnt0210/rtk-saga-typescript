@@ -30,7 +30,7 @@ const authSlide = createSlice({
       state.logging = false;
       state.currentUser = action.payload;
     },
-    loginFaled(state, action: PayloadAction<string>){
+    loginFailed(state, action: PayloadAction<string>){
       state.logging = false;
     },
 

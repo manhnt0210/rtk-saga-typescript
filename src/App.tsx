@@ -12,22 +12,22 @@ function App() {
 
   return (
     <div>
-      <Routes>
-        <Route path='/login'
-          element={<LoginPage />}
-        >
-        </Route>
+        <Routes>
+          <Route path='/login'
+            element={<LoginPage />}
+          >
+          </Route>
 
-        <Route
-          path='/admin'
-          element={<PrivateRoute component={<AdminLayout/>} />}
-        />
+          <Route
+            path='/admin'
+            element={<PrivateRoute component={<AdminLayout/>} />}
+          />
 
-        <Route path='*'
-          element={<NotFound />}
-        >
-        </Route>
-      </Routes>
+          <Route path='*'
+            element={<NotFound />}
+          >
+          </Route>
+        </Routes>
     </div>
   );
 }
