@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Paper, Typography, Box, Button } from '@mui/material'
+import { Paper, Typography, Box, Button, CircularProgress } from '@mui/material'
 import { styled } from '@mui/system';
-import { useDispatch } from 'react-redux';
 import { authActions } from '../authSlice';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 const MyComponent = styled('div')({
   display: 'flex',
@@ -13,7 +13,8 @@ const MyComponent = styled('div')({
 });
 
 export default function LoginPage () {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const isLogging  = useAppSelector(state => state.auth.logging)
 
   const handleLoginClick = () => {
     dispatch(authActions.login({
@@ -35,7 +36,7 @@ export default function LoginPage () {
 
         <Box mt={4}>
           <Button fullWidth variant="contained" color="primary" onClick={handleLoginClick}>
-            Fake Login
+            { isLogging && <CircularProgress size={20} color="secondary" />} &nbsp; Fake Login
           </Button>
         </Box>
       </Paper>
