@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 // import { useNavigate } from 'react-router-dom';
 import rootSaga from './rootSaga';
 import authReducer from '../features/auth/authSlice'
+import dashboardReducer from '../features/dashboard/dashboardSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 // const navigate = useNavigate();
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     counter: counterReducer,
     auth: authReducer,
+    dashboard: dashboardReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

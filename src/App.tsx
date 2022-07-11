@@ -14,7 +14,7 @@ function App() {
         </Route>
 
         <Route
-          path='/admin'
+          path='/admin/*'
           element={<PrivateRoute component={<AdminLayout/>} />}
         />
 

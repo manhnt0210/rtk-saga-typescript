@@ -4,6 +4,9 @@ import { styled } from "@mui/material/styles";
 import * as React from 'react';
 
 import { Header, Sidebar } from '../Common';
+import { Routes, Route } from 'react-router-dom';
+import Dashboard from '../../features/dashboard';
+import Student from '../../features/student';
 
 const StyledSidebar = styled(Box)(({theme})=> ({
   borderRight: `1px solid ${theme.palette.divider}`,
@@ -35,7 +38,19 @@ export function AdminLayout() {
       </StyledSidebar>
 
       <StyledMain className="main" sx={{ gridArea: 'main', bgcolor: '#fff' }}>
-        MAIN
+        <Routes>
+          <Route
+            path='/dashboard'
+            element={<Dashboard />}
+          >
+          </Route>
+
+          <Route
+            path='/students'
+            element={<Student />}
+          >
+          </Route>
+        </Routes>
       </StyledMain>
     </Box>
   );
