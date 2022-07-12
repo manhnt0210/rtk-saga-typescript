@@ -48,7 +48,7 @@ function* fetchRankingByCityList(){
     _page: 1,
     _limit: 5,
     _sort: 'mark',
-    _order: 'asc',
+    _order: 'desc',
     city: x.code,
   }));
 
