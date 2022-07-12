@@ -46,7 +46,7 @@ export function AdminLayout() {
           </Route>
 
           <Route
-            path='/students'
+            path='/students/*'
             element={<Student />}
           >
           </Route>
