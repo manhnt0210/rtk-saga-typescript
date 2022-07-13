@@ -32,7 +32,6 @@ const studentSlice = createSlice({
     },
     fetchStudentListSuccess(state, action: PayloadAction<ListResponse<Student>>) {
       state.list = action.payload.data;
-      console.log(action.payload.data);
       state.pagination = action.payload.pagination
       state.loading = false;
     },
