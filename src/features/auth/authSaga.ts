@@ -15,7 +15,7 @@ function* handleLogin(payload: LoginPayload) {
       })
     );
   // redirect to admin page
-    history.replace('/admin')
+    history.replace('/admin/dashboard')
   } catch {
     yield put(authActions.loginFailed(''));
   }
