@@ -1,7 +1,8 @@
 import { Box, Button, LinearProgress, Pagination, styled, Typography } from '@mui/material';
 import * as React from 'react';
+import studentApi from '../../../api/studentApi';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { ListParams } from '../../../models';
+import { ListParams, Student } from '../../../models';
 import { selectCityList, selectCityMap } from '../../city/citySlice';
 import StudentFilter from '../components/StudentFilter';
 import StudentTable from '../components/StudentTable';
@@ -45,6 +46,16 @@ export default function ListPage () {
   const handleFilterChange = (newFilter: ListParams) => {
     dispatch(studentActions.setFilter(newFilter));
   }
+  
+  const handleRemoveStudent = async (student : Student) => {
+    try {
+      await studentApi.remove(student?.id || '');
+
+      dispatch(studentActions.setFilter({...filter}));
+    } catch (error) {
+      console.log('Remove student failed', error)
+    }
+  }
 
   return (
     <div>
@@ -65,7 +76,7 @@ export default function ListPage () {
           <StudentFilter filter={filter} cityList={cityList} onSearchChange={handleSearchChange} onChange={handleFilterChange} />
         </Box>
 
-        <StudentTable studentList={studentList} cityMap={cityMap}/>
+        <StudentTable studentList={studentList} cityMap={cityMap} onRemove={handleRemoveStudent} />
 
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '16px'}}>
           <Pagination
