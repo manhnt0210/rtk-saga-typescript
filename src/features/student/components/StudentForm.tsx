@@ -5,11 +5,29 @@ import { useAppSelector } from '../../../app/hooks';
 import { RadioGroupField, InputField, SelectField } from '../../../components/FormFields';
 import { Student } from '../../../models';
 import { selectCityOptions } from '../../city/citySlice';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 export interface StudentFormProps {
   initialValues?: Student;
   onSubmit?: (formValue: Student) => void;
 }
+
+const schema = yup.object({
+  name: yup.string().required('Please enter name'),
+  age: yup.number()
+    .positive('Please enter a positive number.')
+    .integer('Please enter an integer.')
+    .required('Please enter age')
+    .typeError('Please enter a valid number'),
+  mark: yup.number().min(0, 'Min is 0')
+    .typeError('Please enter a valid number'),
+  gender: yup
+    .string()
+    .oneOf(['male', 'female'], 'Please select either male or female'),
+  city: yup.string()
+    .required('Please select city'),
+}).required();
 
 export default function StudentForm ({initialValues, onSubmit}: StudentFormProps) {
   const cityOptions = useAppSelector(selectCityOptions);
@@ -19,6 +37,7 @@ export default function StudentForm ({initialValues, onSubmit}: StudentFormProps
     handleSubmit
   } = useForm<Student>({
     defaultValues: initialValues,
+    resolver: yupResolver(schema)
   });
 
   const handleFormSubmit = (formValues: Student) => {
