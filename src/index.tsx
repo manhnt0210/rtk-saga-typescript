@@ -6,6 +6,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { CssBaseline } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import customHistory from './utils/history';
 import CustomRouter from './utils/CustomRouter';
@@ -21,6 +23,18 @@ root.render(
           <App />
         </CssBaseline>
       </CustomRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
+      <ToastContainer />
     </Provider>
   </React.StrictMode>
 );

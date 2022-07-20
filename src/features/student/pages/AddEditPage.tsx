@@ -1,12 +1,14 @@
 import { ChevronLeft } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import * as React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import studentApi from '../../../api/studentApi';
 import { Student } from '../../../models';
 import StudentForm from '../components/StudentForm';
 
 export default function AddEditPage () {
+  const navigate = useNavigate();
   const {studentId} = useParams<{studentId: string}>();
   const isEdit = Boolean(studentId);
 
@@ -25,8 +27,15 @@ export default function AddEditPage () {
    })();
   }, [studentId]);
 
-  const handleStudentFormSubmit = (formValue: Student) => {
+  const handleStudentFormSubmit = async (formValue: Student) => {
+    if (isEdit) {
+      await studentApi.update(formValue)
+    } else {
+      await studentApi.add(formValue)
+    }
 
+    toast.success('Save student successfully.');
+    navigate('/admin/students')
   }
 
   const initialValues: Student = {

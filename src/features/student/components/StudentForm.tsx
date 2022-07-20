@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Alert, Box, Button, CircularProgress } from '@mui/material';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../../app/hooks';
@@ -31,17 +31,24 @@ const schema = yup.object({
 
 export default function StudentForm ({initialValues, onSubmit}: StudentFormProps) {
   const cityOptions = useAppSelector(selectCityOptions);
+  const [error, setError] = React.useState('');
 
   const {
     control,
-    handleSubmit
+    handleSubmit,
+    formState: {isSubmitting}
   } = useForm<Student>({
     defaultValues: initialValues,
     resolver: yupResolver(schema)
   });
 
-  const handleFormSubmit = (formValues: Student) => {
-    console.log({formValues})
+  const handleFormSubmit = async (formValues: Student) => {
+    try {
+      setError('');
+      await onSubmit?.(formValues);
+    } catch (error: any) {
+      setError(error.message);
+    }
   }
 
   return (
@@ -59,11 +66,16 @@ export default function StudentForm ({initialValues, onSubmit}: StudentFormProps
         />
         <InputField name="age" control={control} label="Age" type="number" />
         <InputField name="mark" control={control} label="Mark" type="number" />
-        <SelectField options={cityOptions} name="city" control={control} label="City" />
+
+        {Array.isArray(cityOptions) && cityOptions.length > 0 && (
+          <SelectField options={cityOptions} name="city" control={control} label="City" />
+        )}
+
+        {error && <Alert severity="error">{error}</Alert>}
 
         <Box mt={3}>
-          <Button variant="contained" color="primary" type="submit">
-            Save
+          <Button variant="contained" color="primary" type="submit" disabled={isSubmitting} >
+            { isSubmitting && <CircularProgress size={16} />} Save
           </Button>
         </Box>
       </form>

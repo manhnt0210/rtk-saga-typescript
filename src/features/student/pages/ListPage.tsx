@@ -9,6 +9,7 @@ import StudentFilter from '../components/StudentFilter';
 import StudentTable from '../components/StudentTable';
 import { selectStudentFilter, selectStudentList, selectStudentLoading, selectStudentPagination, studentActions } from '../studentSlice';
 import history from "../../../utils/history";
+import { toast } from 'react-toastify';
 
 const StyledBox = styled(Box)(({theme}) => ({
   position: 'relative',
@@ -54,6 +55,7 @@ export default function ListPage () {
     try {
       await studentApi.remove(student?.id || '');
 
+      toast.success('Save student successfully.');
       dispatch(studentActions.setFilter({...filter}));
     } catch (error) {
       console.log('Remove student failed', error)
